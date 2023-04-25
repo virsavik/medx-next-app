@@ -1,3 +1,157 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next",
+    "prettier"
+  ],
+  "plugins": ["simple-import-sort", "@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest", // Use the latest ecmascript standard
+    "sourceType": "module", // Allows using import/export statements
+    "ecmaFeatures": {
+      "jsx": true // Enable JSX since we're using React
+    },
+    "project": ["./tsconfig.json"]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  },
+  "overrides": [
+    // override "simple-import-sort" config
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "warn",
+          {
+            "groups": [
+              // Packages `react` related packages come first.
+              ["^react", "^@?\\w"],
+              // Internal packages.
+              ["^(@|components)(/.*|$)"],
+              // Side effect imports.
+              ["^\\u0000"],
+              // Parent imports. Put `..` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+              // Style imports.
+              ["^.+\\.?(css)$"]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "rules": {
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": [
+          "static-field",
+          "instance-field",
+          "constructor",
+          "static-method",
+          "instance-method"
+        ]
+      }
+    ],
+    "@typescript-eslint/no-parameter-properties": [
+      "warn",
+      { "allows": ["public", "private", "protected"] }
+    ],
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/explicit-member-accessibility": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "Object": "Use {} instead."
+        }
+      }
+    ],
+    "@typescript-eslint/interface-name-prefix": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/array-type": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "@typescript-eslint/no-misused-promises": [
+      2,
+      {
+        "checksVoidReturn": {
+          "attributes": false
+        }
+      }
+    ],
+    "arrow-parens": ["warn"],
+    "spaced-comment": ["warn", "always"],
+    "guard-for-in": "error",
+    "no-labels": "error",
+    "no-caller": "error",
+    "no-bitwise": "error",
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-new-wrappers": "error",
+    "no-unused-vars": ["warn", { "args": "all" }],
+    "no-eval": "error",
+    "no-new": "error",
+    "no-var": "error",
+    "radix": "error",
+    "eqeqeq": ["error", "always", { "null": "ignore" }],
+    "prefer-const": "error",
+    "object-shorthand": ["error", "always", { "avoidExplicitReturnArrows": true }],
+    "default-case": "error",
+    "complexity": ["error", 40],
+    "no-invalid-this": "off",
+    "comma-dangle": [
+      "warn",
+      {
+        "arrays": "only-multiline",
+        "objects": "only-multiline",
+        "imports": "only-multiline",
+        "exports": "only-multiline",
+        "functions": "only-multiline"
+      }
+    ],
+    "no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsForRegex": ["^state"] }
+    ],
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "react/jsx-wrap-multilines": [
+      "error",
+      {
+        "declaration": "parens-new-line",
+        "assignment": "parens-new-line",
+        "return": "parens",
+        "arrow": "parens",
+        "condition": "ignore",
+        "logical": "ignore",
+        "prop": "ignore"
+      }
+    ]
+  }
 }
